@@ -30,7 +30,6 @@ class OilSynth {
     }
     
     async initialize() {
-        console.log('Initializing Oil Synth...');
         
         // Get DOM elements
         this.canvas = document.getElementById('oil-surface');
@@ -51,14 +50,12 @@ class OilSynth {
         // Initialize components immediately
         await this.start();
         
-        console.log('Oil Synth initialized, ready for first touch...');
     }
     
     async start() {
         if (this.isInitialized) return;
         
         try {
-            console.log('Starting Oil Synth components...');
             
             // Initialize components
             await this.initializeComponents();
@@ -68,7 +65,6 @@ class OilSynth {
             this.setupKnobControls();
             
             this.isInitialized = true;
-            console.log('Oil Synth ready!');
             
         } catch (error) {
             console.error('Failed to start Oil Synth:', error);
@@ -174,7 +170,6 @@ class OilSynth {
                 this.synthesizer.audioContext.resume();
             }
             
-            console.log('First touch - revealing oil surface');
         }
         
         // Convert screen coordinates to normalized coordinates
@@ -194,7 +189,6 @@ class OilSynth {
         // Add visual feedback to oil surface (this triggers reveal on first touch)
         this.oilSurface.addTouch(id, x, y, intensity);
         
-        console.log(`Touch start: ${id} at (${x.toFixed(1)}, ${y.toFixed(1)}) intensity: ${intensity.toFixed(2)}`);
     }
     
     handleTouchMove(id, x, y, intensity) {
@@ -216,7 +210,6 @@ class OilSynth {
         if (voice) {
             this.synthesizer.stopVoice(voice);
             this.activeVoices.delete(id);
-            console.log(`🔇 Stopped voice for touch ${id}, active voices: ${this.activeVoices.size}`);
         }
         
         // Remove visual feedback
@@ -263,9 +256,6 @@ class OilSynth {
         this.frameCount++;
         
         if (now - this.lastFrameTime >= 1000) {
-            const fps = Math.round((this.frameCount * 1000) / (now - this.lastFrameTime));
-            console.log(`FPS: ${fps}, Active Voices: ${this.activeVoices.size}`);
-            
             this.frameCount = 0;
             this.lastFrameTime = now;
         }
@@ -312,12 +302,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         
         // Start performance monitoring
         performanceOptimizer.startFrameMonitoring((fps, frameDelta) => {
-            // Log performance in development
-            if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
-                if (Math.random() < 0.01) { // Log 1% of frames to avoid spam
-                    console.log(`FPS: ${fps.toFixed(1)}, Frame: ${frameDelta.toFixed(1)}ms`);
-                }
-            }
+            // Performance monitoring without logging
         });
         
         // Initialize battery monitoring for mobile optimization
@@ -326,7 +311,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Listen for performance optimization events
         document.addEventListener('performance-optimize', (event) => {
             const { visualQuality, audioComplexity } = event.detail;
-            console.log(`Optimizing: Visual ${(visualQuality * 100).toFixed(0)}%, Audio ${(audioComplexity * 100).toFixed(0)}%`);
             
             if (oilSynth.oilSurface) {
                 oilSynth.oilSurface.setQuality(visualQuality);

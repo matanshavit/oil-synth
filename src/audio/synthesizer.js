@@ -34,7 +34,6 @@ export class Synthesizer {
             this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
             await this.setupAudioChain();
             this.isInitialized = true;
-            console.log('Synthesizer initialized');
         } catch (error) {
             console.error('Failed to initialize synthesizer:', error);
         }
@@ -146,8 +145,24 @@ export class Synthesizer {
     
     // Convert normalized position (0-1) to pentatonic frequency
     positionToFrequency(x, y) {
-        // Octave range based on octave parameter: 0.0 = very low, 1.0 = high
-        const octaveOffset = (this.params.octave - 0.5) * 4; // -2 to +2 octave range
+        // Quantize octave parameter to discrete, musically pleasing steps
+        // This prevents dissonant intermediate tunings
+        const octaveSteps = [0.0, 0.2, 0.35, 0.5, 0.65, 0.8, 1.0]; // 7 discrete positions
+        const octaveRanges = [-2, -1, -0.5, 0, 0.5, 1, 2]; // Corresponding octave offsets
+        
+        // Find closest octave step
+        let closestIndex = 0;
+        let minDistance = Math.abs(this.params.octave - octaveSteps[0]);
+        
+        for (let i = 1; i < octaveSteps.length; i++) {
+            const distance = Math.abs(this.params.octave - octaveSteps[i]);
+            if (distance < minDistance) {
+                minDistance = distance;
+                closestIndex = i;
+            }
+        }
+        
+        const octaveOffset = octaveRanges[closestIndex];
         const baseOctave = 2 + octaveOffset; // Center around octave 2
         const octave = Math.floor(y * 2) + baseOctave; // 2-octave range from base
         
@@ -367,18 +382,33 @@ export class Synthesizer {
                 break;
                 
             case 'octave':
-                // Calculate the actual octave range for logging
-                const octaveOffset = (value - 0.5) * 4;
-                const baseOctave = 2 + octaveOffset;
-                const range = `${baseOctave.toFixed(1)}-${(baseOctave + 2).toFixed(1)}`;
+                // Find the quantized octave range for logging
+                const octaveSteps = [0.0, 0.2, 0.35, 0.5, 0.65, 0.8, 1.0];
+                const octaveRanges = [-2, -1, -0.5, 0, 0.5, 1, 2];
+                const stepNames = ['Very Low', 'Low', 'Mid-Low', 'Mid', 'Mid-High', 'High', 'Very High'];
                 
-                this.logParameter('🎹 OCTAVE', percentage, `range: ${range}`);
+                let closestIndex = 0;
+                let minDistance = Math.abs(value - octaveSteps[0]);
+                
+                for (let i = 1; i < octaveSteps.length; i++) {
+                    const distance = Math.abs(value - octaveSteps[i]);
+                    if (distance < minDistance) {
+                        minDistance = distance;
+                        closestIndex = i;
+                    }
+                }
+                
+                const quantizedOffset = octaveRanges[closestIndex];
+                const baseOctave = 2 + quantizedOffset;
+                const range = `${baseOctave.toFixed(1)}-${(baseOctave + 2).toFixed(1)}`;
+                const stepName = stepNames[closestIndex];
+                
+                this.logParameter('🎹 OCTAVE', percentage, `${stepName} (${range})`);
                 break;
         }
     }
     
     logParameter(name, percentage, details) {
-        console.log(`${name} set to ${percentage}% - ${details}`);
     }
     
     getParameter(param) {
@@ -401,6 +431,5 @@ export class Synthesizer {
             excessVoices.forEach(voice => this.stopVoice(voice));
         }
         
-        console.log(`Audio complexity set to ${(complexity * 100).toFixed(0)}%, max voices: ${this.maxVoices}`);
     }
 }

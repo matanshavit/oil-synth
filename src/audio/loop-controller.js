@@ -32,7 +32,6 @@ export class LoopController {
         try {
             await this.setupAudioChain();
             this.isInitialized = true;
-            console.log('🎵 Loop controller initialized');
         } catch (error) {
             console.error('Failed to initialize loop controller:', error);
         }
@@ -64,10 +63,8 @@ export class LoopController {
             const isOverdub = this.isPlaying;
             
             if (isOverdub) {
-                console.log('🔄 Starting overdub recording');
                 await this.startOverdubRecording();
             } else {
-                console.log('🎙️ Starting new loop recording');
                 await this.startNewRecording();
             }
             
@@ -132,8 +129,6 @@ export class LoopController {
         this.overdubStartTime = this.audioContext.currentTime;
         
         this.mediaRecorder.start(); // Simple recording without real-time chunks
-        
-        console.log('🎙️ Started overdub recording (live input only, no feedback)');
     }
     
     stopRecording() {
@@ -159,11 +154,6 @@ export class LoopController {
             if (this.loopDuration > this.maxLoopDuration) {
                 this.loopDuration = this.maxLoopDuration;
             }
-            
-            console.log(`🎵 Loop recorded: ${this.loopDuration.toFixed(2)}s`);
-        } else {
-            // For overdubs, keep the existing loop duration
-            console.log(`🔄 Overdub completed, maintaining loop duration: ${this.loopDuration.toFixed(2)}s`);
         }
         
         return true;
@@ -180,8 +170,6 @@ export class LoopController {
             
             // Start playing immediately after recording
             this.startPlayback();
-            
-            console.log('🎵 Loop processing complete, playback started');
         } catch (error) {
             console.error('Error processing recording:', error);
         }
@@ -250,9 +238,6 @@ export class LoopController {
             
             // Resume playback from the current position instead of restarting
             this.startPlaybackAtPosition(currentPosition);
-            
-            const overdubCycles = Math.ceil(overdubBuffer.duration / this.loopDuration);
-            console.log(`🔄 Overdub mixed across ${overdubCycles} loop cycle${overdubCycles > 1 ? 's' : ''} starting at ${overdubStartInLoop.toFixed(2)}s`);
         } catch (error) {
             console.error('Error processing overdub:', error);
         }
@@ -285,8 +270,6 @@ export class LoopController {
             // Adjust playStartTime to account for the offset
             this.playStartTime = this.audioContext.currentTime - startOffset;
             
-            const positionText = position > 0 ? ` at ${(position * 100).toFixed(1)}%` : '';
-            console.log(`▶️ Loop playback started${positionText}`);
             return true;
         } catch (error) {
             console.error('Error starting playback:', error);
@@ -302,7 +285,6 @@ export class LoopController {
             this.playbackSource = null;
             this.isPlaying = false;
             
-            console.log('⏹️ Loop playback stopped');
             return true;
         } catch (error) {
             console.error('Error stopping playback:', error);
@@ -328,7 +310,6 @@ export class LoopController {
                 0.05
             );
         }
-        console.log(`🔊 Loop volume: ${(this.volume * 100).toFixed(0)}%`);
     }
     
     clear() {
@@ -370,7 +351,6 @@ export class LoopController {
             this.overdubDestination = null;
         }
         
-        console.log('🗑️ Loop cleared');
         return true;
     }
     

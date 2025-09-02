@@ -32,7 +32,6 @@ export class LoopControls {
             this.startAnimation();
             
             this.isInitialized = true;
-            console.log('🎛️ Loop controls initialized');
         } catch (error) {
             console.error('Failed to initialize loop controls:', error);
         }
@@ -99,7 +98,6 @@ export class LoopControls {
         const state = this.loopController.getState();
         
         if (!state.hasLoop) {
-            console.log('No loop to play');
             return;
         }
         
@@ -110,7 +108,6 @@ export class LoopControls {
     handleClear() {
         this.loopController.clear();
         this.updateUI();
-        console.log('Loop cleared');
     }
     
     startVolumeInteraction(event) {
@@ -212,6 +209,5 @@ export class LoopControls {
         document.removeEventListener('mouseup', () => this.endVolumeInteraction());
         
         this.isInitialized = false;
-        console.log('🎛️ Loop controls destroyed');
     }
 }

@@ -60,7 +60,6 @@ export class OilSurface {
             this.setupGeometry();
             this.isInitialized = true;
             this.startAnimation();
-            console.log('Oil surface initialized');
         } catch (error) {
             console.error('Failed to initialize oil surface:', error);
         }
@@ -317,7 +316,6 @@ export class OilSurface {
         this.isRevealed = true;
         this.revealCenter = { x, y };
         this.revealStartTime = this.time;
-        console.log(`🎨 Oil surface reveal started at (${x.toFixed(2)}, ${y.toFixed(2)})`);
     }
     
     updateTouch(id, x, y, intensity = 1.0) {
@@ -411,6 +409,5 @@ export class OilSurface {
     // Performance optimization method
     setQuality(quality) {
         this.quality = Math.max(0.1, Math.min(1.0, quality));
-        console.log(`Oil surface quality set to ${(this.quality * 100).toFixed(0)}%`);
     }
 }
