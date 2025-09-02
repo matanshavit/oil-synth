@@ -1,12 +1,16 @@
 import { Synthesizer } from './audio/synthesizer.js';
+import { LoopController } from './audio/loop-controller.js';
 import { OilSurface } from './visual/oil-surface.js';
 import { TouchHandler } from './controls/touch-handler.js';
 import { createKnobControls } from './controls/knob-control.js';
+import { LoopControls } from './controls/loop-controls.js';
 import { performanceOptimizer } from './utils/performance.js';
 
 class OilSynth {
     constructor() {
         this.synthesizer = null;
+        this.loopController = null;
+        this.loopControls = null;
         this.oilSurface = null;
         this.touchHandler = null;
         this.knobControls = [];
@@ -80,6 +84,13 @@ class OilSynth {
         // Initialize synthesizer with optimal settings
         this.synthesizer = new Synthesizer(audioSettings);
         await this.synthesizer.initialize();
+        
+        // Initialize loop controller and controls
+        this.loopController = new LoopController(this.synthesizer);
+        await this.loopController.initialize();
+        
+        this.loopControls = new LoopControls(this.loopController);
+        await this.loopControls.initialize();
         
         // Initialize oil surface visualization with optimal settings
         this.oilSurface = new OilSurface(this.canvas, visualSettings);
@@ -276,6 +287,14 @@ class OilSynth {
         
         if (this.oilSurface) {
             this.oilSurface.destroy();
+        }
+        
+        if (this.loopControls) {
+            this.loopControls.destroy();
+        }
+        
+        if (this.loopController) {
+            this.loopController.clear();
         }
         
         this.knobControls.forEach(knob => knob.destroy());
