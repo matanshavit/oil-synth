@@ -58,7 +58,10 @@ html, body {
     font-size: 30px;
     font-weight: bold;
     letter-spacing: 2px;
-    color: #888;
+    background: linear-gradient(135deg, #b3884d, #5bb386, #4d9bb3, #9d4db3, #b35d94);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     text-transform: uppercase;
     width: 112px;
 }
