@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>Oil Synth</title>
+    <link rel="stylesheet" href="src/styles/main.css">
+</head>
+<body>
+    <div id="app">
+        <div id="oil-surface-container">
+            <canvas id="oil-surface"></canvas>
+            <div id="touch-overlay"></div>
+            <div id="instruction-text">tap anywhere to play</div>
+        </div>
+        
+        <div id="controls-panel">
+            <div class="control-group">
+                <div class="knob-container">
+                    <div class="knob" id="grime-knob" data-param="grime">
+                        <div class="knob-handle"></div>
+                    </div>
+                    <label>GRIME</label>
+                </div>
+                
+                <div class="knob-container">
+                    <div class="knob" id="flow-knob" data-param="flow">
+                        <div class="knob-handle"></div>
+                    </div>
+                    <label>FLOW</label>
+                </div>
+                
+                <div class="knob-container">
+                    <div class="knob" id="shimmer-knob" data-param="shimmer">
+                        <div class="knob-handle"></div>
+                    </div>
+                    <label>SHIMMER</label>
+                </div>
+                
+                <div class="knob-container">
+                    <div class="knob" id="depth-knob" data-param="depth">
+                        <div class="knob-handle"></div>
+                    </div>
+                    <label>DEPTH</label>
+                </div>
+                
+                <div class="knob-container">
+                    <div class="knob" id="octave-knob" data-param="octave">
+                        <div class="knob-handle"></div>
+                    </div>
+                    <label>OCTAVE</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script type="module" src="src/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+# Git attributes for AI-generated code attribution
+*.js text
+*.ts text
+*.css text
+*.html text
+*.md text
+
+# Ensure proper attribution tracking
+* text=auto

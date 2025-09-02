@@ -1,0 +1,24 @@
+{
+  "name": "oil-synth",
+  "version": "1.0.0",
+  "description": "A mobile-optimized audio synthesizer with fluid oil-like visuals",
+  "main": "index.html",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint src --ext .js,.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0",
+    "eslint": "^8.57.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "typescript": "^5.0.0"
+  },
+  "keywords": ["synthesizer", "audio", "webgl", "mobile", "music"],
+  "author": "",
+  "license": "MIT"
+}
