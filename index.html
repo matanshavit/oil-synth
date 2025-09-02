@@ -13,42 +13,46 @@
     <div id="app">
         <div id="loop-panel">
             <div class="loop-container">
-                <div class="loop-controls">
-                    <button class="loop-btn record-btn" id="loop-record" data-state="idle">
-                        <div class="record-dot"></div>
-                    </button>
-                    <button class="loop-btn play-btn" id="loop-play" data-state="stopped">
-                        <div class="play-icon"></div>
-                    </button>
-                    <div class="loop-progress-indicator">
-                        <svg class="progress-circle" viewBox="0 0 40 40">
-                            <circle cx="20" cy="20" r="18" fill="none" stroke="rgba(255, 200, 50, 0.2)" stroke-width="2"/>
-                            <circle cx="20" cy="20" r="18" fill="none" stroke="#ffc832" stroke-width="2" 
-                                    stroke-linecap="round" stroke-dasharray="113.10" stroke-dashoffset="113.10" 
-                                    class="progress-bar" transform="rotate(-90 20 20)"/>
-                        </svg>
-                    </div>
-                    <div class="loop-volume-container">
-                        <div class="loop-volume-knob" id="loop-volume">
-                            <div class="knob-handle"></div>
+                <div class="loop-header">
+                    <span class="header-text left">OIL</span>
+                    <div class="loop-controls">
+                        <button class="loop-btn record-btn" id="loop-record" data-state="idle">
+                            <div class="record-dot"></div>
+                        </button>
+                        <button class="loop-btn play-btn" id="loop-play" data-state="stopped">
+                            <div class="play-icon"></div>
+                        </button>
+                        <div class="loop-progress-indicator">
+                            <svg class="progress-circle" viewBox="0 0 40 40">
+                                <circle cx="20" cy="20" r="18" fill="none" stroke="rgba(255, 200, 50, 0.2)" stroke-width="2"/>
+                                <circle cx="20" cy="20" r="18" fill="none" stroke="#ffc832" stroke-width="2"
+                                        stroke-linecap="round" stroke-dasharray="113.10" stroke-dashoffset="113.10"
+                                        class="progress-bar" transform="rotate(-90 20 20)"/>
+                            </svg>
                         </div>
+                        <div class="loop-volume-container">
+                            <div class="loop-volume-knob" id="loop-volume">
+                                <div class="knob-handle"></div>
+                            </div>
+                        </div>
+                        <button class="loop-btn clear-btn" id="loop-clear">
+                            <div class="clear-icon">×</div>
+                        </button>
                     </div>
-                    <button class="loop-btn clear-btn" id="loop-clear">
-                        <div class="clear-icon">×</div>
-                    </button>
+                    <span class="header-text right">SYNTH</span>
                 </div>
                 <div class="loop-status">
                     <span class="loop-label">LOOP</span>
                 </div>
             </div>
         </div>
-        
+
         <div id="oil-surface-container">
             <canvas id="oil-surface"></canvas>
             <div id="touch-overlay"></div>
             <div id="instruction-text">tap anywhere to play</div>
         </div>
-        
+
         <div id="controls-panel">
             <div class="control-group">
                 <div class="knob-container">
@@ -57,28 +61,28 @@
                     </div>
                     <label>GRIME</label>
                 </div>
-                
+
                 <div class="knob-container">
                     <div class="knob" id="flow-knob" data-param="flow">
                         <div class="knob-handle"></div>
                     </div>
                     <label>FLOW</label>
                 </div>
-                
+
                 <div class="knob-container">
                     <div class="knob" id="shimmer-knob" data-param="shimmer">
                         <div class="knob-handle"></div>
                     </div>
                     <label>SHIMMER</label>
                 </div>
-                
+
                 <div class="knob-container">
                     <div class="knob" id="depth-knob" data-param="depth">
                         <div class="knob-handle"></div>
                     </div>
                     <label>DEPTH</label>
                 </div>
-                
+
                 <div class="knob-container">
                     <div class="knob" id="pitch-knob" data-param="pitch">
                         <div class="knob-handle"></div>
@@ -88,7 +92,7 @@
             </div>
         </div>
     </div>
-    
+
     <script type="module" src="src/main.js"></script>
 </body>
 </html>

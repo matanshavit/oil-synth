@@ -43,7 +43,32 @@ html, body {
     flex-direction: column;
     align-items: center;
     gap: 5px;
-    min-width: 220px;
+    min-width: 300px;
+}
+
+.loop-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    position: relative;
+}
+
+.header-text {
+    font-size: 30px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: #888;
+    text-transform: uppercase;
+    width: 112px;
+}
+
+.header-text.left {
+    text-align: right;
+}
+
+.header-text.right {
+    text-align: left;
 }
 
 .loop-controls {
@@ -51,6 +76,7 @@ html, body {
     gap: 15px;
     align-items: center;
     justify-content: center;
+    margin: 0 40px;
 }
 
 .loop-btn {
@@ -346,8 +372,18 @@ html, body {
         padding: 10px 15px;
     }
 
+    .loop-container {
+        min-width: 280px;
+    }
+
+    .header-text {
+        font-size: 24px;
+        letter-spacing: 1.5px;
+    }
+
     .loop-controls {
         gap: 12px;
+        margin: 0 32px;
     }
 
     .loop-btn {
@@ -441,8 +477,18 @@ html, body {
         padding: 8px 15px;
     }
 
+    .loop-container {
+        min-width: 250px;
+    }
+
+    .header-text {
+        font-size: 22px;
+        letter-spacing: 1px;
+    }
+
     .loop-controls {
         gap: 10px;
+        padding: 0 40px;
     }
 
     .loop-btn {
