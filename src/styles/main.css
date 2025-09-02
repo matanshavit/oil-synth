@@ -49,7 +49,6 @@ html, body {
 .loop-header {
     display: flex;
     align-items: center;
-    justify-content: center;
     width: 100%;
     position: relative;
 }
@@ -63,15 +62,18 @@ html, body {
     -webkit-text-fill-color: transparent;
     background-clip: text;
     text-transform: uppercase;
-    width: 112px;
+    width: 120px;
+    flex-shrink: 0;
 }
 
 .header-text.left {
     text-align: right;
+    margin-right: 20px;
 }
 
 .header-text.right {
     text-align: left;
+    margin-left: 20px;
 }
 
 .loop-controls {
@@ -79,7 +81,7 @@ html, body {
     gap: 15px;
     align-items: center;
     justify-content: center;
-    margin: 0 40px;
+    flex: 0 0 auto;
 }
 
 .loop-btn {
@@ -380,13 +382,21 @@ html, body {
     }
 
     .header-text {
-        font-size: 24px;
-        letter-spacing: 1.5px;
+        font-size: 16px;
+        letter-spacing: 1px;
+        width: 80px;
+    }
+
+    .header-text.left {
+        margin-right: 6px;
+    }
+
+    .header-text.right {
+        margin-left: 6px;
     }
 
     .loop-controls {
         gap: 12px;
-        margin: 0 32px;
     }
 
     .loop-btn {
@@ -485,13 +495,13 @@ html, body {
     }
 
     .header-text {
-        font-size: 22px;
-        letter-spacing: 1px;
+        font-size: 14px;
+        letter-spacing: 0.5px;
+        width: 60px;
     }
 
     .loop-controls {
-        gap: 10px;
-        padding: 0 40px;
+        gap: 8px;
     }
 
     .loop-btn {
