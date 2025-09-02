@@ -143,10 +143,10 @@ export class OilSurface {
                 vec2 uv = v_texCoord;
                 vec2 p = uv * 4.0;
                 
-                // Base fluid motion
-                float fluid = fbm(p + u_time * 0.2);
-                fluid += fbm(p * 2.0 - u_time * 0.15) * 0.5;
-                fluid += fbm(p * 4.0 + u_time * 0.1) * 0.25;
+                // More organic, slower fluid motion like oil
+                float fluid = fbm(p + u_time * 0.12); // Slower primary movement
+                fluid += fbm(p * 1.8 - u_time * 0.08) * 0.6; // Gentler secondary layer
+                fluid += fbm(p * 3.5 + u_time * 0.05) * 0.3; // Subtle detail layer
                 
                 // Touch influence
                 float touchInfluence = 0.0;
@@ -172,20 +172,20 @@ export class OilSurface {
                 // Combine fluid and touch
                 fluid += touchInfluence;
                 
-                // Create iridescent colors
-                float hue = fract(fluid * 0.3 + touchCenter.x * 0.5 + touchCenter.y * 0.3 + u_time * 0.05);
-                float sat = 0.7 + 0.3 * sin(fluid * 2.0);
-                float val = 0.6 + 0.4 * fluid;
+                // Create softer, oil-like colors
+                float hue = fract(fluid * 0.2 + touchCenter.x * 0.3 + touchCenter.y * 0.2 + u_time * 0.03);
+                float sat = 0.35 + 0.25 * sin(fluid * 1.5); // Much lower saturation
+                float val = 0.4 + 0.35 * fluid; // Slightly darker overall
                 
-                // Add some metallic shimmer
-                float shimmer = pow(max(0.0, sin(fluid * 10.0 + u_time * 2.0)), 3.0);
-                val += shimmer * 0.3;
+                // Add subtle oil-like shimmer
+                float shimmer = pow(max(0.0, sin(fluid * 6.0 + u_time * 1.5)), 2.0);
+                val += shimmer * 0.15; // More subtle shimmer
                 
                 vec3 oilColor = hsv2rgb(vec3(hue, sat, val));
                 
-                // Add depth with darker areas
-                float depth = smoothstep(0.2, 0.8, fluid);
-                oilColor *= 0.5 + 0.5 * depth;
+                // Add depth with more organic gradients
+                float depth = smoothstep(0.15, 0.85, fluid);
+                oilColor *= 0.3 + 0.6 * depth; // Deeper, richer shadows
                 
                 // Stay pure black until first touch
                 if (u_revealProgress <= 0.0) {
@@ -196,12 +196,13 @@ export class OilSurface {
                 // Single reveal center expanding outward
                 float distToReveal = distance(uv, u_revealCenter);
                 
-                // Create irregular blob shape using noise
-                float noiseValue = fbm(uv * 8.0 + u_time * 0.1) * 0.3;
-                float revealRadius = u_revealProgress * 1.4 + noiseValue;
+                // Create organic oil bubble shape using multiple noise layers
+                float noiseValue = fbm(uv * 6.0 + u_time * 0.08) * 0.4;
+                noiseValue += fbm(uv * 12.0 - u_time * 0.05) * 0.2; // Additional detail
+                float revealRadius = u_revealProgress * 1.3 + noiseValue;
                 
-                // Smooth edge for the reveal
-                float revealMask = 1.0 - smoothstep(revealRadius - 0.15, revealRadius + 0.1, distToReveal);
+                // Much softer, more organic edges like oil spreading
+                float revealMask = 1.0 - smoothstep(revealRadius - 0.25, revealRadius + 0.15, distToReveal);
                 
                 // Mix between black and oil colors based on reveal
                 vec3 finalColor = mix(vec3(0.0), oilColor, revealMask);

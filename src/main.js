@@ -205,12 +205,11 @@ class OilSynth {
         if (voice) {
             this.synthesizer.stopVoice(voice);
             this.activeVoices.delete(id);
+            console.log(`🔇 Stopped voice for touch ${id}, active voices: ${this.activeVoices.size}`);
         }
         
         // Remove visual feedback
         this.oilSurface.removeTouch(id);
-        
-        console.log(`Touch end: ${id} duration: ${duration.toFixed(0)}ms`);
     }
     
     handleResize() {
