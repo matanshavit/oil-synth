@@ -134,8 +134,8 @@ class OilSynth {
                 max: 1,
                 step: 0.01
             },
-            octave: {
-                initialValue: this.synthesizer.getParameter('octave'),
+            pitch: {
+                initialValue: this.synthesizer.getParameter('pitch'),
                 min: 0,
                 max: 1,
                 step: 0.01

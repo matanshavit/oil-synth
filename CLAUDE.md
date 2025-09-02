@@ -103,7 +103,7 @@ feat: implement complete oil synth with WebGL visuals
 
 - Web Audio API synthesizer with pentatonic scale mapping
 - WebGL oil surface with touch-based reveal system
-- Five-knob interface (GRIME, FLOW, SHIMMER, DEPTH, OCTAVE)
+- Five-knob interface (GRIME, FLOW, SHIMMER, DEPTH, PITCH)
 - Mobile-optimized with performance scaling
 - Touch interaction with visual feedback
 

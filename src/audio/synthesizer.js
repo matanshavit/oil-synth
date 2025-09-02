@@ -19,7 +19,7 @@ export class Synthesizer {
             flow: 0.2,     // delay time and feedback
             shimmer: 0.15, // chorus depth
             depth: 0.25,   // reverb amount
-            octave: 0.45   // octave range (0.0 = very low, 1.0 = high)
+            pitch: 0.45    // pitch range (0.0 = very low, 1.0 = high)
         };
         
         // Pentatonic scale intervals (C major pentatonic)
@@ -145,25 +145,25 @@ export class Synthesizer {
     
     // Convert normalized position (0-1) to pentatonic frequency
     positionToFrequency(x, y) {
-        // Quantize octave parameter to discrete, musically pleasing steps
+        // Quantize pitch parameter to discrete, musically pleasing steps
         // This prevents dissonant intermediate tunings
-        const octaveSteps = [0.0, 0.2, 0.35, 0.5, 0.65, 0.8, 1.0]; // 7 discrete positions
-        const octaveRanges = [-2, -1, -0.5, 0, 0.5, 1, 2]; // Corresponding octave offsets
+        const pitchSteps = [0.0, 0.2, 0.35, 0.5, 0.65, 0.8, 1.0]; // 7 discrete positions
+        const pitchRanges = [-2, -1, -0.5, 0, 0.5, 1, 2]; // Corresponding pitch offsets
         
-        // Find closest octave step
+        // Find closest pitch step
         let closestIndex = 0;
-        let minDistance = Math.abs(this.params.octave - octaveSteps[0]);
+        let minDistance = Math.abs(this.params.pitch - pitchSteps[0]);
         
-        for (let i = 1; i < octaveSteps.length; i++) {
-            const distance = Math.abs(this.params.octave - octaveSteps[i]);
+        for (let i = 1; i < pitchSteps.length; i++) {
+            const distance = Math.abs(this.params.pitch - pitchSteps[i]);
             if (distance < minDistance) {
                 minDistance = distance;
                 closestIndex = i;
             }
         }
         
-        const octaveOffset = octaveRanges[closestIndex];
-        const baseOctave = 2 + octaveOffset; // Center around octave 2
+        const pitchOffset = pitchRanges[closestIndex];
+        const baseOctave = 2 + pitchOffset; // Center around octave 2
         const octave = Math.floor(y * 2) + baseOctave; // 2-octave range from base
         
         const scaleIndex = Math.floor(x * this.pentatonicIntervals.length);
@@ -381,29 +381,29 @@ export class Synthesizer {
                 }
                 break;
                 
-            case 'octave':
-                // Find the quantized octave range for logging
-                const octaveSteps = [0.0, 0.2, 0.35, 0.5, 0.65, 0.8, 1.0];
-                const octaveRanges = [-2, -1, -0.5, 0, 0.5, 1, 2];
+            case 'pitch':
+                // Find the quantized pitch range for logging
+                const pitchSteps = [0.0, 0.2, 0.35, 0.5, 0.65, 0.8, 1.0];
+                const pitchRanges = [-2, -1, -0.5, 0, 0.5, 1, 2];
                 const stepNames = ['Very Low', 'Low', 'Mid-Low', 'Mid', 'Mid-High', 'High', 'Very High'];
                 
                 let closestIndex = 0;
-                let minDistance = Math.abs(value - octaveSteps[0]);
+                let minDistance = Math.abs(value - pitchSteps[0]);
                 
-                for (let i = 1; i < octaveSteps.length; i++) {
-                    const distance = Math.abs(value - octaveSteps[i]);
+                for (let i = 1; i < pitchSteps.length; i++) {
+                    const distance = Math.abs(value - pitchSteps[i]);
                     if (distance < minDistance) {
                         minDistance = distance;
                         closestIndex = i;
                     }
                 }
                 
-                const quantizedOffset = octaveRanges[closestIndex];
+                const quantizedOffset = pitchRanges[closestIndex];
                 const baseOctave = 2 + quantizedOffset;
                 const range = `${baseOctave.toFixed(1)}-${(baseOctave + 2).toFixed(1)}`;
                 const stepName = stepNames[closestIndex];
                 
-                this.logParameter('🎹 OCTAVE', percentage, `${stepName} (${range})`);
+                this.logParameter('🎹 PITCH', percentage, `${stepName} (${range})`);
                 break;
         }
     }
